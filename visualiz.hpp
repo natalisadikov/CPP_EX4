@@ -1,6 +1,3 @@
-// 206396863
-// natalisadikov2318@gmail.com
-
 #ifndef GUI_HPP
 #define GUI_HPP
 
@@ -13,17 +10,17 @@
 #include <map>
 #include <functional>
 
-
+//this class represent the visualiation of the tree on the screen
 template <typename T>
 class VisualizeTree {
 private:
-    Tree<T>& tree;
-    sf::RenderWindow screen; 
-    std::map<Node<T>*, sf::Vector2f> m_nodes;
-    sf::Font f;
+    Tree<T>& tree;//tree
+    sf::RenderWindow screen;//window 
+    std::map<Node<T>*, sf::Vector2f> m_nodes;//map of nodes that store the position of all the nodes
+    sf::Font f;//font 
  
     void positions(Node<T>* node, float x, float y, float z) {
-      
+      //check if node exist
         if (!node) return;
         m_nodes[node] = sf::Vector2f(x, y);
         for (size_t i = 0; i < node->get_children().size(); ++i) {
@@ -39,18 +36,19 @@ private:
         }
         return true;
     }
+//main fonction to draw the tree
     void draw_tree() {
         for (const auto& p : m_nodes) {
             Node<T>* node = p.first;
             sf::Vector2f pos = p.second;
 
-            
+            // draw circle
             sf::CircleShape c(25.0f);
             c.setFillColor(sf::Color::Cyan);
             c.setPosition(pos - sf::Vector2f(21.0f,21.0f));
             screen.draw(c);
 
-           
+            //text in the circle
             sf::Text key;
             key.setFont(f);
             std::ostringstream s;
@@ -78,6 +76,7 @@ private:
 
 public:
 
+    //constractor for the visualize the tree
     VisualizeTree(Tree<T>& tree) : tree(tree), screen(sf::VideoMode(800, 1200), "Tree Visualization") {
         if (!load_font()) {
             std::cerr << "Error in the font " << std::endl;
@@ -85,10 +84,12 @@ public:
         }
     }
     
+    //print the tree on the window 
     void print_tree() {
-       
+        //store the root of the tree
         Node<T>* root = tree.get_root();
-        
+        //check if the root exist 
+        //if the root exist we calculate the position of all the nodes
         if (root) {
             positions(root, screen.getSize().x / 2.f, 200.0f, 220.0f);
         }

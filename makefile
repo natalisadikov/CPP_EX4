@@ -1,6 +1,3 @@
-# 206396863
-# natalisadikov2318@gmail.com
-
 CXX=clang++
 CXXFLAGS=-std=c++17 -Wall 
 SFML_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
